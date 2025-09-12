@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jafar Archi Designs</title>
+  <style>
+    /* Reset & global */
+    * {
+      box-sizing: border-box;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+      color: white;
+      background: black;
+      scroll-behavior: smooth;
+    }
+    /* Scroll snapping container */
+    .scroll-container {
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
+      scroll-padding-top: 0px; /* header height */
+    }
+    section {
+      min-height: 100vh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+    /* Background images with zoom */
+    #home, #portfolio, #services, #contact {
+  position: relative;
+  overflow: hidden;
+}
+
+#home::before,
+#portfolio::before,
+#services::before,
+#contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  opacity: 1;
+  animation: zoomInOut 20s ease-in-out infinite;
+}
+#home::before { background-image: url('6. Side Elevation.jpg'); }
+#portfolio::before { background-image: url('2. Club House.jpg'); }
+#services::before { background-image: url('4. Prasads Residence/8.\ family.jpg'); }
+#contact::before { background-image: url('8. 1214 Apartment/8. Living Room.jpg'); }
+
+/* The rest of your section content needs position: relative and z-index > 0 (if needed): */
+section > * {
+  position: relative;
+  z-index: 1;
+}
+
+    @keyframes zoomInOut {
+      0%, 100% { transform: scale(1);}
+      50% { transform: scale(1.1);}
+    }
+
+    /* Fixed header */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 10000;
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 15px 0;
+      box-sizing: border-box;
+      height: 195px; /* fixed header height */
+    }
+    .logo-text-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    .logo {
+      width: 120px;
+      height: auto;
+    }
+    .logo-text-img {
+      width: 195px;
+      height: auto;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      font-weight: bold;
+      font-size: 1.2em;
+      width: 100%;
+      max-width: 1200px;
+      box-sizing: border-box;
+      padding: 0 20px;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #f4c842;
+    }
+
+    /* Section headings */
+    section h2 {
+      font-family: 'Futura Light', Arial, sans-serif;
+      font-weight: 300;
+      font-size: 3em;
+      background: rgba(0,0,0,0.4);
+      padding: 15px 40px;
+      border-radius: 8px;
+      margin-bottom: 40px;
+      user-select: none;
+      max-width: 900px;
+    }
+
+    /* Portfolio grid */
+    .portfolio-grid {
+      width: 90vw;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+    .project-box {
+      background: hsla(0, 0%, 0%, 0.618);
+      border-radius: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.853);
+      transition: transform 0.3s ease;
+      overflow: hidden;
+      user-select: none;
+    }
+    .project-box:hover {
+      transform: scale(1.05);
+    }
+    .project-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+    .project-name {
+      padding: 10px 15px;
+      font-size: 1em;
+      font-weight: bold;
+      color: white;
+      text-align: center;
+    }
+
+    /* Services section */
+    .services-grid {
+      width: 90vw;
+      max-width: 1200px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .service-box {
+      background: rgba(0, 0, 0, 0.618);
+      border-radius: 16px;
+      padding: 20px 10px;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.874);
+      cursor: pointer;
+      user-select: none;
+    }
+    .service-img-placeholder {
+      width: 100%;
+      height: 160px;
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+    .service-name {
+      font-size: 1.3em;
+      font-weight: 600;
+      color: white;
+    }
+
+    /* Contact section */
+    #contact .contact-details {
+      background: rgba(0,0,0,0.7);
+      padding: 20px 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      font-size: 1.4em;
+      line-height: 1.4;
+      margin: 0 auto;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.7);
+      user-select: text;
+    }
+    #contact .contact-details a {
+      color: #f4c842;
+      text-decoration: none;
+    }
+    #contact .contact-details a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9em;
+      user-select: none;
+      background-color: rgba(0,0,0,0.5);
+    }
+
+    /* Slideshow overlay */
+    .slideshow-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.95);
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 100000;
+      user-select: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .slideshow-img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 0;
+      object-fit: contain;
+      filter: drop-shadow(0 0 10px black);
+    }
+    .slideshow-caption {
+      margin-top: 24px;
+      font-size: 1.5em;
+      color: #fff;
+      font-weight: bold;
+      text-align: center;
+    }
+    .close-btn {
+      position: absolute;
+      top: 36px;
+      right: 50px;
+      font-size: 2.5em;
+      color: #fff;
+      cursor: pointer;
+      user-select: none;
+      background: none;
+      z-index: 100001;
+    }
+    .close-btn:hover {
+      color: #f4c842;
+    }
+    .nav-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3em;
+      font-weight: bold;
+      padding: 5px 15px;
+      background-color: rgba(0,0,0,0.3);
+      color: white;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 100001;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .nav-arrow:hover {
+      background-color: #f4c842;
+      color: black;
+    }
+    .nav-arrow.left {
+      left: 40px;
+    }
+    .nav-arrow.right {
+      right: 40px;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+      }
+      .logo-text-container {
+        height: 230px;
+      }
+      #home {
+        padding-top: 320px;
+      }
+      .logo-text-img {
+        width: 150px;
+      }
+      .logo {
+        width: 80px;
+      }
+      nav {
+        gap: 40px;
+        font-size: 1.1em;
+      }
+      .services-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+    }
+    @media (max-width: 600px) {
+      nav {
+        gap: 25px;
+        font-size: 1em;
+      }
+      .logo-text-img {
+        width: 90vw;
+      }
+      .logo {
+        width: 70px;
+      }
+      #portfolio h2, #services h2, #contact h2 {
+        font-size: 2em;
+        padding: 10px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-text-container" aria-label="Logo and site name">
+      <img src="Logo small.png" alt="Jafar Archi Designs Logo" class="logo" />
+      <img src="Logo Text.png" alt="Jafar Archi Designs Logo Text" class="logo-text-img" />
+    </div>
+    <nav role="navigation" aria-label="Primary Navigation">
+      <a href="#home" class="nav-link">Home</a>
+      <a href="#portfolio" class="nav-link">Portfolio</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </nav>
+  </header>
+
+  <div class="scroll-container" id="scrollContainer" tabindex="0" style="padding-top:170px;">
+    <section id="home" role="main" aria-label="Home section">
+      <h2>Crafting Modern Spaces with Timeless Elegance.</h2>
+    </section>
+
+    <section id="portfolio" role="region" aria-label="Portfolio section">
+      <h2>Portfolio</h2>
+      <div class="portfolio-grid" id="portfolioGrid" tabindex="0"></div>
+    </section>
+
+    <section id="services" role="region" aria-label="Services section">
+      <h2>Services</h2>
+      <div class="services-grid">
+        <div class="service-box">
+  <img src="6. Side Elevation.jpg" alt="Architectural Design" style="width:100%; height:160px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;" />
+  <div class="service-name">Architectural Design</div>
+</div>
+
+        <div class="service-box">
+  <img src="6. Rajamundry apartment/1. Living Rooom.jpg" alt="Interior Design" style="width:100%; height:160px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;" />
+  <div class="service-name">Interior Design</div>
+</div>
+
+        <div class="service-box">
+  <img src="2. Hall00.jpg" alt="3D Visualisatioin" style="width:100%; height:160px; object-fit: cover; border-radius: 12px; margin-bottom: 15px;" />
+  <div class="service-name">3D Visualisatioin</div>
+</div>
+
+      </div>
+    </section>
+
+    <section id="contact" role="region" aria-label="Contact section">
+      <h2>Contact</h2>
+      <div class="contact-details">
+        <p><strong>Ar Jafar</strong></p>
+        <p>Phone / WhatsApp: <a href="tel:+919030198181">+91 9030198181</a></p>
+        <p>Email: <a href="mailto:jarchidesigns@gmail.com">jarchidesigns@gmail.com</a></p>
+        <p>Location: Somajiguda, Hyderabad-500082</p>
+      </div>
+    </section>
+  </div>
+
+  <footer aria-label="Site copyright">
+    &copy; 2025 Jafar Archi Designs. All rights reserved.
+  </footer>
+
+  <div class="slideshow-overlay" id="slideshowOverlay" tabindex="0" aria-hidden="true" aria-label="Project image slideshow" role="dialog">
+    <span class="close-btn" id="closeBtn" role="button" aria-label="Close slideshow">&times;</span>
+    <span class="nav-arrow left" id="prevBtn" role="button" aria-label="Previous image">&#10094;</span>
+    <img src="" alt="" class="slideshow-img" id="slideshowImage" />
+    <span class="nav-arrow right" id="nextBtn" role="button" aria-label="Next image">&#10095;</span>
+    <div class="slideshow-caption" id="slideshowCaption"></div>
+  </div>
+
+  <script>
+    const projects = [
+      {
+        name: "Proposed Hostel Building for NARF-BR., ICMR at Genome Valley Hyderabad",
+        images: [
+          {src: "9. ICMR/1. Elevation.png", title: "Elevation"},
+          {src: "9. ICMR/2. Elevation.png", title: "Elevation"},
+          {src: "9. ICMR/3. Elevation.png", title: "Elevation"}
+        ],
+        cover: "9. ICMR/1. Elevation.png"
+      },
+      {
+        name: "1214 Apartment Interiors",
+        images: [
+          {src: "8. 1214 Apartment/1. Main Door Rev-01.jpg", title: "Main Door"},
+          {src: "8. 1214 Apartment/2. Hall.jpg", title: "Living Room"},
+          {src: "8. 1214 Apartment/3. Hall.jpg", title: "TV Unit"},
+          {src: "8. 1214 Apartment/4. Hall.jpg", title: "Living Room"},
+          {src: "8. 1214 Apartment/5. Dining.jpg", title: "Dining"},
+          {src: "8. 1214 Apartment/6. Kitchen.jpg", title: "Kitchen"},
+          {src: "8. 1214 Apartment/7. Pooja front.jpg", title: "Pooja Front"},
+          {src: "8. 1214 Apartment/8. Living Room.jpg", title: "Living Room"},
+          {src: "8. 1214 Apartment/9. Living.jpg", title: "Living Room"},
+          {src: "8. 1214 Apartment/10 Dining.jpg", title: "Dining"},
+          {src: "8. 1214 Apartment/11. Feature wall.jpg", title: "Feature Wall"},
+          {src: "8. 1214 Apartment/12. Hall.jpg", title: "Family area"},
+          {src: "8. 1214 Apartment/12. Sit Out.jpg", title: "Sitout"},
+          {src: "8. 1214 Apartment/13. Balcony.jpg", title: "Balcony"},
+          {src: "8. 1214 Apartment/13. Sit Out.jpg", title: "M Bedroom"},
+          {src: "8. 1214 Apartment/15. M Bedroom.jpg", title: "M Bedroom"},
+          {src: "8. 1214 Apartment/16. M Bedroom.jpg", title: "M Bedroom"},
+          {src: "8. 1214 Apartment/17. M Bedroom.jpg", title: "C Bedroom"},
+          {src: "8. 1214 Apartment/18. M Bedroom.jpg", title: "C Bedroom"},
+          {src: "8. 1214 Apartment/19. C Bedroom.jpg", title: "C Bedroom"},
+          {src: "8. 1214 Apartment/20. C Bedroom.jpg", title: "C Bedroom"}
+          
+        ],
+        cover: "8. 1214 Apartment/1. Main Door Rev-01.jpg"
+      },
+      {
+        name: "Mohan Sai Apartment",
+        images: [
+          {src: "7. Mohan sai/1. Living Room.jpg", title: "Living room"},
+          {src: "7. Mohan sai/2. Living Room.jpg", title: "Living room"},
+          {src: "7. Mohan sai/3. Dining.jpg", title: "Dining area"},
+          {src: "7. Mohan sai/4. Kitchen.jpg", title: "Kitchen"},
+          {src: "7. Mohan sai/5. Dining.jpg", title: "Dining area"},
+          {src: "7. Mohan sai/6. M Bedroom1.jpg", title: "M Bedroom"},
+          {src: "7. Mohan sai/7. M Bedroom1.jpg", title: "M Bedroom"},
+          {src: "7. Mohan sai/8. CH Bedroom1.jpg", title: "C Bedroom"},
+          {src: "7. Mohan sai/9. CH Bedroom1.jpg", title: "C Bedroom"}
+        ],
+        cover: "7. Mohan sai/1. Living Room.jpg"
+      },
+      {
+        name: "Rajamundry apartment interiors",
+        images: [
+          {src: "6. Rajamundry apartment/1. Living Rooom.jpg", title: "Living room"},
+          {src: "6. Rajamundry apartment/2. Dining.jpg", title: "Dining"},
+          {src: "6. Rajamundry apartment/3. Bedroom.jpg", title: "M Bedroom"},
+          {src: "6. Rajamundry apartment/4. Bedroom.jpg", title: "M Bedroom"},
+          {src: "6. Rajamundry apartment/5. Bedrrom.jpg", title: "M Bedroom"},
+          {src: "6. Rajamundry apartment/6. Bedroom.jpg", title: "M Bedroom"},
+          {src: "6. Rajamundry apartment/7. C bedroom.jpg", title: "C Bedroom"},
+          {src: "6. Rajamundry apartment/8. C bedroom.jpg", title: "C Bedroom"},
+          {src: "6. Rajamundry apartment/9. C bedroom.jpg", title: "C Bedroom"},
+          {src: "6. Rajamundry apartment/10. C bedroom.jpg", title: "C Bedroom"},
+          {src: "6. Rajamundry apartment/11. Kitchen.jpg", title: "Kitchen"}
+        ],
+        cover: "6. Rajamundry apartment/1. Living Rooom.jpg"
+      },
+      {
+        name: "Bhaskar Rao Residence",
+        images: [
+          {src: "5. Bhaskar rao residence/Bhaskar Rao Elevation opt-2.effectsResult.jpg", title: "Elevation"},
+          {src: "5. Bhaskar rao residence/Bhaskar Rao Elevation.effectsResult.jpg", title: "Elevation"},
+          {src: "5. Bhaskar rao residence/Bhaskar Rao Elevation_1.effectsResult.jpg", title: "Elevation"}
+        ],
+        cover: "5. Bhaskar rao residence/Bhaskar Rao Elevation opt-2.effectsResult.jpg"
+      },
+      {
+        name: "Prasad's Residence",
+        images: [
+          {src: "4. Prasads Residence/1. Final Render.jpg", title: "Elevation"},
+          {src: "4. Prasads Residence/2. Living.jpg", title: "Living room"},
+          {src: "4. Prasads Residence/3. Dining.jpg", title: "Dining Area"},
+          {src: "4. Prasads Residence/4. Foyer.jpg", title: "Foyer"},
+          {src: "4. Prasads Residence/5. Living.jpg", title: "Living Area"},
+          {src: "4. Prasads Residence/6. Kitchen.jpg", title: "Kitchen"},
+          {src: "4. Prasads Residence/7. family.jpg", title: "Family area"},
+          {src: "4. Prasads Residence/8. family.jpg", title: "Family area"},
+          {src: "4. Prasads Residence/9. family.jpg", title: "Family area"},
+          {src: "4. Prasads Residence/10. family.jpg", title: "Family area"},
+          {src: "4. Prasads Residence/11. open kitchen.jpg", title: "Open kitchen"},
+          {src: "4. Prasads Residence/12. open kitchen.jpg", title: "Open kitchen"},
+          {src: "4. Prasads Residence/13. M bedroom.jpg", title: "M bedroom"},
+          {src: "4. Prasads Residence/14. M bedroom.jpg", title: "M bedroom"},
+          {src: "4. Prasads Residence/15. M bedroom.jpg", title: "M bedroom"}
+        ],
+        cover: "4. Prasads Residence/4. Foyer.jpg"
+      },
+      {
+        name: "Raj Kumar Residence",
+        images: [{src: "3. Raj Kumar/1. Front Elevation1.jpg", title: "Elevation"}],
+        cover: "3. Raj Kumar/1. Front Elevation1.jpg"
+      },
+      {
+        name: "Venkataratnam Residence",
+        images: [
+          {src: "venkataratnam/1. Elevation.jpg", title: "Elevation"},
+          {src: "venkataratnam/2. Elevation.jpg", title: "Elevation"}
+        ],
+        cover: "venkataratnam/2. Elevation.jpg"
+      },
+      {
+        name: "Shekar Reddy Residence",
+        images: [
+          {src: "1. Shekar reddy residence/5. Elevation.effectsResult.jpg", title: "Elevation"},
+          {src: "1. Shekar reddy residence/1. Main hall.jpg", title: "Living room"},
+          {src: "1. Shekar reddy residence/2. Main Hall.jpg", title: "TV Unit"},
+          {src: "1. Shekar reddy residence/3. Study Area.jpg", title: "Study Area"},
+          {src: "1. Shekar reddy residence/10. Kitchen pooja.jpg", title: "Kitchen"},
+          {src: "1. Shekar reddy residence/11. Ground Bedroom.jpg", title: "Children's Bedroom"},
+          {src: "1. Shekar reddy residence/12. Ground bedroom.jpg", title: "Children's Bedroom"},
+          {src: "1. Shekar reddy residence/14. Master bedroom.jpg", title: "M Bedroom"},
+          {src: "1. Shekar reddy residence/15. Master Bedroom.jpg", title: "M Bedroom"},
+          {src: "1. Shekar reddy residence/16. Master bedroom.jpg", title: "M Bedroom"},
+          {src: "1. Shekar reddy residence/17. Master Bedroom.jpg", title: "M Bedroom"},
+          {src: "1. Shekar reddy residence/22. Home theatre.jpg", title: "Home Theatre"}
+        ],
+        cover: "1. Shekar reddy residence/1. Main hall.jpg"
+      }
+    ];
+
+    // Render portfolio projects
+    const portfolioGrid = document.getElementById('portfolioGrid');
+    projects.forEach((project, projIndex) => {
+      const box = document.createElement('div');
+      box.className = 'project-box';
+      box.tabIndex = 0;
+      box.setAttribute('role', 'button');
+      box.setAttribute('aria-label', `Open slideshow for ${project.name}`);
+
+      const img = document.createElement('img');
+      img.className = 'project-img';
+      img.src = project.cover;
+      img.alt = project.name;
+      box.appendChild(img);
+
+      const name = document.createElement('div');
+      name.className = 'project-name';
+      name.textContent = project.name;
+      box.appendChild(name);
+
+      const openSlideshow = () => {
+        currentProjectIndex = projIndex;
+        currentImageIndex = 0;
+        updateSlideshow();
+        slideshowOverlay.style.display = 'flex';
+        slideshowOverlay.setAttribute('aria-hidden', 'false');
+        slideshowOverlay.focus();
+      };
+
+      box.addEventListener('click', openSlideshow);
+      box.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          openSlideshow();
+          e.preventDefault();
+        }
+      });
+
+      portfolioGrid.appendChild(box);
+    });
+
+    // Slideshow logic
+    const slideshowOverlay = document.getElementById('slideshowOverlay');
+    const slideshowImage = document.getElementById('slideshowImage');
+    const slideshowCaption = document.getElementById('slideshowCaption');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentProjectIndex = 0;
+    let currentImageIndex = 0;
+
+    function updateSlideshow() {
+      const project = projects[currentProjectIndex];
+      const image = project.images[currentImageIndex];
+      slideshowImage.src = image.src;
+      slideshowImage.alt = image.title;
+      slideshowCaption.textContent = image.title;
+    }
+
+    function closeSlideshow() {
+      slideshowOverlay.style.display = 'none';
+      slideshowOverlay.setAttribute('aria-hidden', 'true');
+    }
+
+    closeBtn.addEventListener('click', closeSlideshow);
+    slideshowOverlay.addEventListener('click', e => {
+      if (e.target === slideshowOverlay) closeSlideshow();
+    });
+
+    prevBtn.addEventListener('click', () => {
+      const project = projects[currentProjectIndex];
+      const len = project.images.length;
+      currentImageIndex = (currentImageIndex - 1 + len) % len;
+      updateSlideshow();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      const project = projects[currentProjectIndex];
+      const len = project.images.length;
+      currentImageIndex = (currentImageIndex + 1) % len;
+      updateSlideshow();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (slideshowOverlay.style.display === 'flex') {
+        if (e.key === 'Escape') closeSlideshow();
+        else if (e.key === 'ArrowLeft') prevBtn.click();
+        else if (e.key === 'ArrowRight') nextBtn.click();
+      }
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
